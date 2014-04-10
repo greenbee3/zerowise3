@@ -8,20 +8,20 @@
 ?>
 <? // check login
 include_once($_SERVER['DOCUMENT_ROOT']."common/login/check_login.php");
-include_once($_SERVER['DOCUMENT_ROOT']."common/lib/dbcon_finance.php");
+include_once($_SERVER['DOCUMENT_ROOT']."common/lib/dbcon.php");
 include_once($_SERVER['DOCUMENT_ROOT']."common/lib/student_info_lib.php");
 include_once($_SERVER['DOCUMENT_ROOT']."common/lib/code_lib.php");
 
 // Only authorized users from financial affairs can use the buttons
 $use_button=" disabled";
-$auth_list=array("F2009003","S2008003","S2008002","leiadmin");
+$auth_list=array("F2009003","S2008003","S2008002","leiadmin","S2007015");
 
 if(in_array ($_SESSION[uid],$auth_list)==true) {
 	$use_button="";
 }
 	  
 if($operation=='delete') {	
-	$sql="update acc_tuition_fee_history set deleted=1 where history_id='$history_id'";
+	$sql="update advising_history set deleted=1 where history_id='$history_id'";
 	mysql_query($sql);
 	if(mysql_affected_rows()>=1) echo("<script>alert('Deletion was successful!');</script>");
 	else echo("<script>alert('Deletion failed!');</script>");	
@@ -29,7 +29,7 @@ if($operation=='delete') {
 else if($operation=='must_change') {	
 	if($must=='y') $must=1;
 	else $must=0;
-	$sql="update acc_tuition_fee_history set must_paid='$must_checked' where history_id='$history_id'";
+	$sql="update advising_history set must_paid='$must_checked' where history_id='$history_id'";
 	mysql_query($sql);
 	if(mysql_affected_rows()>=1) echo("<script>alert('Must information was successfully updated!');</script>");
 	else echo("<script>alert('Change failed!');</script>");	
@@ -89,7 +89,7 @@ else if($operation=='must_change') {
  		<td align="Right" >
 
 		<?
-		$auth_list=array("F2009003","S2008003","S2008002","leiadmin");
+		$auth_list=array("F2009003","S2008003","S2008002","leiadmin","S2007015");
 		
 		if(in_array ($_SESSION[uid],$auth_list)==true) {
 			$use_button="";
@@ -97,7 +97,7 @@ else if($operation=='must_change') {
 		else $use_button=" disabled";
 		?>
 		<?	if($use_button!=" disabled")
-		echo"<input bgcolor='gray' type='button' value='Add Payment/Scholarship' onclick=call_add_payment('$student_id','$open_year') >";
+		echo"<input bgcolor='gray' type='button' value='Add Advising' onclick=call_add_advising('$student_id','$open_year') >";
 		?>
 		<?
 		$auth_list=array("S2007015","S2007013","S2007012","leiadmin");
@@ -257,8 +257,8 @@ else if($operation=='must_change') {
 </body>
 
 <script>
-function call_add_payment(student_id,open_year) {
-	var checkIdWin = window.open('add_payment_form.php?student_id='+student_id+'&open_year='+open_year,'','width=830,height=600,scrollbars=yes,left=50,top=30,resizable=yes,location=no,address=no');
+function call_add_advising(student_id,open_year) {
+	var checkIdWin = window.open('add_advising_form.php?student_id='+student_id+'&open_year='+open_year,'','width=830,height=600,scrollbars=yes,left=50,top=30,resizable=yes,location=no,address=no');
 	checkIdWin.focus();
 }
 
@@ -273,27 +273,27 @@ function call_exit() {
 }
 
 function call_del(hid) {
-	document.pay_tuition_form.operation.value='delete';
+	document.advising_form.operation.value='delete';
 	if(confirm("Would you like to delete this record?")){
-		document.pay_tuition_form.history_id.value=hid;
-		document.pay_tuition_form.submit();
+		document.advising_form.history_id.value=hid;
+		document.advising_form.submit();
 	}
 }
 
 function call_must(hid,idx){
-	document.pay_tuition_form.operation.value='must_change';
-	document.pay_tuition_form.history_id.value=hid;
+	document.advising_form.operation.value='must_change';
+	document.advising_form.history_id.value=hid;
 	<?
-		if($check_cnt==1) echo"if(document.pay_tuition_form.must.checked==true) document.pay_tuition_form.must_checked.value='1';
-	else document.pay_tuition_form.must_checked.value='0';
+		if($check_cnt==1) echo"if(document.advising_form.must.checked==true) document.advising_form.must_checked.value='1';
+	else document.advising_form.must_checked.value='0';
 	";
 		else echo "
-	if(document.pay_tuition_form.must[idx].checked==true) document.pay_tuition_form.must_checked.value='1';
-	else document.pay_tuition_form.must_checked.value='0';
+	if(document.advising_form.must[idx].checked==true) document.advising_form.must_checked.value='1';
+	else document.advising_form.must_checked.value='0';
 	";
 	?>
 	alert("If it is checked and if there is any fee, you must add a payment to clear this sanction.");
-	document.pay_tuition_form.submit();
+	document.advising_form.submit();
 }
 </script>
 
