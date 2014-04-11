@@ -12,7 +12,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."common/lib/dbcon_finance.php");
 include_once($_SERVER['DOCUMENT_ROOT']."common/lib/gen_lib.php");
 include_once($_SERVER['DOCUMENT_ROOT']."common/lib/code_lib.php");
 include_once($_SERVER['DOCUMENT_ROOT']."common/lib/code_financial_lib.php");
-if($open_year=="") $open_year=$_SESSION[c_year];
+if($open_year=="") $open_year=$_SESSION['c_year'];
 ?>
 
 
@@ -57,7 +57,7 @@ if($open_year=="") $open_year=$_SESSION[c_year];
       <td bgcolor="#EFEFEF">
 				<!--- Select Course year ---->
 			<Select name="open_year" size="1">
-				<? print_year($_SESSION[c_year],$open_year-1,-1,2);?>		
+				<? print_year($_SESSION[c_year],$open_year,-2,4);?>		
 			</Select>
 		</td>
     </tr>	
@@ -75,21 +75,6 @@ if($open_year=="") $open_year=$_SESSION[c_year];
 	  </td>
     </tr>
 	
-	<!-- <tr>
-	  <td width="100" bgcolor="#E8E8E8">&nbsp;&nbsp; Level</td> 
-	  <td bgcolor="#EFEFEF">
-			<Select name="t_level" size="1">
-				<?print_t_level($t_level);?>		
-			</Select>
-	  </td>
-	</tr> -->
-	<!-- <tr>
-	  <td width="100" bgcolor="#E8E8E8">&nbsp;&nbsp; Country</td>
-	  <td bgcolor="#EFEFEF">
-			<input type=text name="country_name" size="40"> (eg, Mongolia, Russia, Korea, etc)
-			</Select>
-	  </td>
-	</tr> -->
 	<tr> 
       <td width="100" bgcolor="#E8E8E8">&nbsp;&nbsp; Department (Students)</td>
       <td bgcolor="#EFEFEF">
